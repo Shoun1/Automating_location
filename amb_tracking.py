@@ -1,5 +1,6 @@
 from airflow import DAG
-from datetime import datetime, timedelta
+import datetime as dt
+from datetime import timedelta
 from airflow.operators.python_operator import PythonOperator
 from airflow.operators.python_operator import PythonVirtualenvOperator
 from airflow.operators.python_operator import BashOperator
