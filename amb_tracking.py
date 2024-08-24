@@ -41,10 +41,7 @@ def update_ambulancestatus():
             new_status = assignment_status[ambulance_id]
             update_query = "UPDATE ambulances SET status=new_status WHERE amb_id = amb_id;"
             cur.execute(update_query)
-    query3 = "SELECT * FROM ambulances;"
-    cur.execute(query3)
-    res = cur.fetchall()
-    print(res)
+
 update_ambulancestatus()
 
 def track_ambulancelocation():
