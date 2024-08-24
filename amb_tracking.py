@@ -1,6 +1,8 @@
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python_operator import PythonVirtualenvOperator
+from airflow.operators.python_operator import BashOperator
 import psycopg2
 import pandas as pd
 import folium
@@ -21,6 +23,9 @@ conn = psycopg2.connect(
 
 cur = conn.cursor()
 
+addcol_query = "ALTER TABLE ambulances ADD COLUMN new_status SERIAL;"
+cur.execute(addcol_query)
+
 def update_ambulancestatus():
     query1 = "SELECT ambulance_id,status FROM assignments;" #query
     cur.execute(query1)
@@ -34,8 +39,6 @@ def update_ambulancestatus():
     for ambulance_id,new_status in assignment_status.items():
         if ambulance_id in assignment_status:
             new_status = assignment_status[ambulance_id]
-            addcol_query = "ALTER TABLE ambulances ADD COLUMN new_status SERIAL;"
-            cur.execute(addcol_query)
             update_query = "UPDATE ambulances SET status=new_status WHERE amb_id = amb_id;"
             cur.execute(update_query)
     query3 = "SELECT * FROM ambulances;"
@@ -52,14 +55,25 @@ def track_ambulancelocation():
         ambulance_id = row[0]
         latitude = row[1]
         longitude = row[2]
-        gps_locator()
+        map_obj=gps_locator()
         try:
             print("Ambulance id: ",ambulance_id)
             print("Current location: ",latitude,longitude)
-            folium.Marker([latitude,longitude],popup='current location')
+            folium.Marker([latitude,longitude],popup='current location').add_to(map_obj)
+            map_obj.save('"AmbulanceTracking.html")
         except:
             print("Internet not available")
 
+        assign_ambulance()
+        update_ambulancestatus()    
+
+def assign_ambulance():
+    query4="SELECT * FROM assignments WHERE status='Available';"
+    cur.execute(query4)
+    first = cur.fetchone()
+    query='UPDATE assignments WHERE amb_id=first[0] set status="On Duty"'
+    update_ambulancestatus()
+    
 def gps_locator():
     obj = folium.Map(location=[0,0],zoom_start=2)
 
