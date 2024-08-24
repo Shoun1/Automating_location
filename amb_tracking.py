@@ -76,7 +76,7 @@ def gps_locator():
 
 default_args = {
     'owner':'shoun10',
-    'start_date' : datetime.datetime(2023,07,18),
+    'start_date' : datetime.datetime(2023,08,24),
     'retries' : 1,
     'retry_delay': datetime.timedelta(minutes=5),
 }
@@ -84,7 +84,7 @@ default_args = {
 with DAG(
     'ambulance tracker',
     default_args=default_args,
-    schedule_interval = timedelta(days=1),
+    schedule_interval = timedelta(seconds=30),
     catchup=False
 ) as dag:
 
