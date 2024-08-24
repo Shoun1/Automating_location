@@ -77,17 +77,12 @@ with DAG(
     catchup=False
 ) as dag:
 
-update_ambulancestatus_task = PythonOperator(
-    task_id = 'update_ambulancestatus',
-    python_callable=update_ambulancestatus,
-    dag=dag
-)
+print_tracking = BashOperator(task_id='tracking',bash_command='echo "Ambulance tracking is on"')
+track_ambulancelocation = PythonOperator(task_id='track_ambulancelocation',python_callable='track_ambulancelocation')
 
-track_ambulancelocations_task = PythonOperator(
-    task_id = 'track_ambulancelocation',
-    python_callable=track_ambulancelocation,
-    dag=dag
-)
+print_tracking.set_downstream(track_ambulance_location)
+track_ambulancelocation.set_uptstream(print_tracking)
+
 
 
 
