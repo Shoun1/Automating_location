@@ -1,4 +1,5 @@
-Automation application with database layer as backend
+Automation application with Database Layer as backend
+
 #Database driven application in Apache Airflow and PostgreSQL
 
 ##Cursoring and DAG pipelined structure of web application running on Apache Web-UI
