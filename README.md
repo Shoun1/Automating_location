@@ -5,12 +5,11 @@ An automated dispatch and GPS tracking system built using PostgreSQL as the back
 Key Features
 Database-Driven Workflow
 
-PostgreSQL stores ambulance status and location data.
+PostgreSQL tables such as ambulance,assignments,tracking_data stores ambulance status and location data.
 
-psycopg2 enables reliable interaction between Python scripts and the database.
+psycopg2 adapter allows a wired connection between Python and the local database on my machine.
 
-Apache Airflow Integration
-
+Apache Airflow for automating tasks such as update_ambulancestatus(),trackinglocations(),assignment_status.
 DAG scheduled every 30 seconds to simulate real-time dispatch operations.
 
 Modular Python operators to fetch, update, and log ambulance data.
