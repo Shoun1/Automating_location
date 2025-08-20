@@ -55,31 +55,6 @@ Custom Python operators manage each task.
 
 DAG reruns every 30 seconds (configurable).
 
-Setup Instructions
-Clone Repository
-
-git clone https://github.com/your-username/ambulance-tracker.git
-cd ambulance-tracker
-Set Up Virtual Environment
-
-python -m venv env
-source env/bin/activate  # Windows: env\Scripts\activate
-pip install -r requirements.txt
-Start PostgreSQL Database
-Ensure your PostgreSQL server is running and accessible with correct host, port, and credentials.
-
-Run Airflow Scheduler
-
-
-airflow db init
-airflow webserver --port 8080
-airflow scheduler
-Sample Output
-The map output is saved as:
-
-ambulance_map.html
-It shows live ambulance positions and updates their movement across coordinates.
-
 Tech Stack Summary
 Apache Airflow: Task scheduling and orchestration
 
