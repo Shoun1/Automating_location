@@ -93,7 +93,7 @@ print_tracking = BashOperator(task_id='tracking',bash_command='echo "Ambulance t
 track_ambulancelocation = PythonOperator(task_id='track_ambulancelocation',python_callable='track_ambulancelocation')
 
 print_tracking.set_downstream(track_ambulance_location)
-track_ambulancelocation.set_uptstream(print_tracking)
+track_ambulancelocation.set_upstream(print_tracking)
 
 
 
